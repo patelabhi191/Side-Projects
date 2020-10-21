@@ -1,0 +1,9 @@
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\Release\Main Page.exe.config
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\Release\Main Page.exe
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\Release\Main Page.pdb
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main_Page.HitOrMiss.resources
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main_Page.Properties.Resources.resources
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main Page.csproj.GenerateResource.cache
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main Page.csproj.CoreCompileInputs.cache
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main Page.exe
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main Page.pdb

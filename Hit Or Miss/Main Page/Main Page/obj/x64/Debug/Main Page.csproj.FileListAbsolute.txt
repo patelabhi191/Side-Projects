@@ -1,0 +1,10 @@
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\x64\Debug\Main Page.exe.config
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\x64\Debug\Main Page.exe
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\x64\Debug\Main Page.pdb
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\x64\Debug\Main Page.csprojAssemblyReference.cache
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\x64\Debug\Main_Page.HitOrMiss.resources
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\x64\Debug\Main_Page.Properties.Resources.resources
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\x64\Debug\Main Page.csproj.GenerateResource.cache
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\x64\Debug\Main Page.csproj.CoreCompileInputs.cache
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\x64\Debug\Main Page.exe
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\x64\Debug\Main Page.pdb
