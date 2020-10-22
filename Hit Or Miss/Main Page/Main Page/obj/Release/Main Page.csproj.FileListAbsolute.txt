@@ -7,3 +7,4 @@ F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main Page.c
 F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main Page.csproj.CoreCompileInputs.cache
 F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main Page.exe
 F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main Page.pdb
+F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\obj\Release\Main Page.csprojAssemblyReference.cache

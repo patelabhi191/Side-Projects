@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,6 +24,8 @@ namespace Main_Page
         Random rand = new Random();
         List<int> selection = new List<int>();
         List<int> drawNumbers = new List<int>();
+        // SoundPlayer backgroundSound = new SoundPlayer(@"F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\LotterySlow.wav");
+        SoundPlayer buttonSound = new SoundPlayer(@"F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\ButtonClick.wav");
 
         //Some error strings
         string[] noNumberLeftError = {"Ohh Bhai, Limit ma... Numberej nai","Baaaennnnnnchood pati gya numbers ma bhai", "Eeeela pati gya numbers hoo","Chal Chal have numbers nakhne ","Numbers pati gya laa" };
@@ -33,6 +36,7 @@ namespace Main_Page
         {
             InitializeComponent();
             label9.SendToBack();
+          //  backgroundSound.Play();
             pictureBox2.SendToBack();
            
         }
@@ -42,13 +46,17 @@ namespace Main_Page
             //Assigning value to label2 - balance amount left
             label2.Text = "$" + balance;
             this.Controls.Add(label2);
-
             label5.Text = "";
             label6.Text = "";
-            //label7.Text = "";
             label8.Text = "";
             label11.Text = "";
+
+           // SoundPlayer backgroundSound = new SoundPlayer(@"F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\LotterySlow.wav");
            
+           // SoundPlayer buttonSound = new SoundPlayer(@"F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\Button.wav");
+            
+
+
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -59,7 +67,7 @@ namespace Main_Page
 
         private void quickPick_Click(object sender, EventArgs e)
         {
-
+            buttonSound.Play();
             //List<int> selection = new List<int>();
             selection.Clear();
             int number;
@@ -90,13 +98,16 @@ namespace Main_Page
         }
         private void play_Click(object sender, EventArgs e)
         {
+            buttonSound.Play();
             if (selection.Count < 12)
                 MessageBox.Show("Pela 12 number to select kar CHOMu", "Error hoo");
             if (selection.Count == 12)
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to play.\nCollect $2 from the customer.", "Ready to Play", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.No)
-                { }
+                {
+                    
+                }
                 else
                 {
                     balance = balance - 2;
@@ -118,11 +129,13 @@ namespace Main_Page
 
                     label5.Text = " " + drawNumbers[0] + "   " + drawNumbers[1] + "  " + drawNumbers[2] + "   " + drawNumbers[3] + "   " + drawNumbers[4] + "   " + drawNumbers[5];
                     label6.Text = drawNumbers[6] + "  " + drawNumbers[7] + "  " + drawNumbers[8] + "  " + drawNumbers[9] + "  " + drawNumbers[10] + "  " + drawNumbers[11];
+
+                    label11.Text = "";
+                    checkSameNumbers();
+                    winningOrLosing();
+                    label2.Refresh();
                 }
-                label11.Text = "";
-                checkSameNumbers();
-                winningOrLosing();
-                label2.Refresh();
+                
             }
             
         }
@@ -151,6 +164,7 @@ namespace Main_Page
 
         public void showResult()
         {
+            
             if (selection.Count > 12)
             {
                 MessageBox.Show("Bhai. 12 Numberej... BC", "Error");
@@ -413,13 +427,14 @@ namespace Main_Page
             }
             else
             {
-                label11.Text = "Chodu Banyo chodu. \n$2 gya";
+                label11.Text = "Chodu Banyo. \n$2 gya";
             }
 
         }
         
         private void button28_Click(object sender, EventArgs e)
         {
+            buttonSound.Play();
             int counter = selection.Count;
             if (counter < 1)
                 MessageBox.Show("Number to select kar","Error found");
@@ -629,6 +644,11 @@ namespace Main_Page
         private void pictureBox2_Click(object sender, EventArgs e)
         {
            
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

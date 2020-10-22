@@ -773,12 +773,13 @@
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.label9.Font = new System.Drawing.Font("Comic Sans MS", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(998, 88);
+            this.label9.Location = new System.Drawing.Point(990, 86);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(407, 80);
             this.label9.TabIndex = 0;
             this.label9.Text = "      HOW TO PLAY     \r\n        HIT OR MISS      ";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // pictureBox1
             // 
