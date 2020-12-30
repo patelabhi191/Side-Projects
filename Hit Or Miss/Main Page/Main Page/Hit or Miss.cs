@@ -25,7 +25,8 @@ namespace Main_Page
         List<int> selection = new List<int>();
         List<int> drawNumbers = new List<int>();
         // SoundPlayer backgroundSound = new SoundPlayer(@"F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\LotterySlow.wav");
-        SoundPlayer buttonSound = new SoundPlayer(@"F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\ButtonClick.wav");
+        SoundPlayer buttonSound = new SoundPlayer(@"F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\button_press.wav");
+        SoundPlayer freePLay = new SoundPlayer(@"F:\College\Side Projects\Hit Or Miss\Main Page\Main Page\bin\Freeplay.wav");
 
         //Some error strings
         string[] noNumberLeftError = {"Ohh Bhai, Limit ma... Numberej nai","Baaaennnnnnchood pati gya numbers ma bhai", "Eeeela pati gya numbers hoo","Chal Chal have numbers nakhne ","Numbers pati gya laa" };
@@ -408,6 +409,7 @@ namespace Main_Page
             {
                 label11.Text = "FREE PLAY\nNew Numbers are generated\nHit the play button";
                 selection.Clear();
+                freePLay.Play();
                 string numbersToString = "";
                 balance = balance + 2;
                 int number;
@@ -647,6 +649,11 @@ namespace Main_Page
         }
 
         private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
         {
 
         }
