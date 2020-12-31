@@ -95,7 +95,7 @@ namespace Main_Page
             textBox10.Text = selection[9] + "";
             textBox11.Text = selection[10] + "";
             textBox12.Text = selection[11] + "";
-
+            
         }
         private void play_Click(object sender, EventArgs e)
         {
@@ -656,6 +656,16 @@ namespace Main_Page
         private void label5_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button21_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
