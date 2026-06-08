@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Results Dashboard (Heartbeat Mode)</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+        body {
+            background: #0b0b14;
+            background-image: 
+                radial-gradient(at 20% 20%, rgba(52, 152, 219, 0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 20%, rgba(232, 67, 147, 0.15) 0px, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .subtitle {
+            color: #6a6a8a;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+
+        .board {
+            display: flex;
+            width: 100%;
+            max-width: 1100px;
+            gap: 50px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            flex: 1;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            transition: all 0.5s ease-in-out; /* Smooth transition when entering heartbeat mode */
+        }
+
+        /* Base Borders and Glows */
+        .boy-zone {
+            border-top: 6px solid #00d2ff;
+            box-shadow: inset 0 0 30px rgba(0, 210, 255, 0.05), 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .girl-zone {
+            border-top: 6px solid #ff007f;
+            box-shadow: inset 0 0 30px rgba(255, 0, 127, 0.05), 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .team-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .boy-zone .team-title { color: #00d2ff; text-shadow: 0 0 15px rgba(0, 210, 255, 0.4); }
+        .girl-zone .team-title { color: #ff007f; text-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
+
+        .counter {
+            font-size: 9rem;
+            font-weight: 900;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            line-height: 1;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .boy-zone .counter { color: #ffffff; text-shadow: 0 0 30px rgba(0, 210, 255, 0.6); }
+        .girl-zone .counter { color: #ffffff; text-shadow: 0 0 30px rgba(255, 0, 127, 0.6); }
+
+        /* --- THE HEARTBEAT ANIMATIONS --- */
+        
+        /* Boy Heartbeat Effect */
+        .boy-zone.heartbeat {
+            animation: boyPulse 1.4s infinite ease-in-out;
+            background: rgba(0, 210, 255, 0.04);
+            border-color: #00d2ff;
+        }
+        @keyframes boyPulse {
+            0% { transform: scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0px rgba(0, 210, 255, 0); }
+            14% { transform: scale(1.03); box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 25px rgba(0, 210, 255, 0.3); }
+            28% { transform: scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0px rgba(0, 210, 255, 0); }
+            42% { transform: scale(1.02); box-shadow: 0 22px 55px rgba(0,0,0,0.55), 0 0 15px rgba(0, 210, 255, 0.2); }
+            70% { transform: scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0px rgba(0, 210, 255, 0); }
+        }
+
+        /* Girl Heartbeat Effect */
+        .girl-zone.heartbeat {
+            animation: girlPulse 1.4s infinite ease-in-out;
+            background: rgba(255, 0, 127, 0.04);
+            border-color: #ff007f;
+        }
+        @keyframes girlPulse {
+            0% { transform: scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0px rgba(255, 0, 127, 0); }
+            14% { transform: scale(1.03); box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 25px rgba(255, 0, 127, 0.3); }
+            28% { transform: scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0px rgba(255, 0, 127, 0); }
+            42% { transform: scale(1.02); box-shadow: 0 22px 55px rgba(0,0,0,0.55), 0 0 15px rgba(255, 0, 127, 0.2); }
+            70% { transform: scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0px rgba(255, 0, 127, 0); }
+        }
+
+        /* Testing utility panel */
+        .test-controls { opacity: 0.3; transition: opacity 0.3s ease; }
+        .test-controls:hover { opacity: 1; }
+        .reset-btn { background: #c0392b; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+        .reset-btn:hover { background: #e74c3c; }
+    </style>
+</head>
+<body>
+
+    <h1>LIVE PREDICTIONS</h1>
+    <div class="subtitle">Testing Environment Enabled</div>
+
+    <div class="board">
+        <!-- TEAM BOY -->
+        <div id="boy-card" class="team-card boy-zone">
+            <div class="team-title">TEAM BOY 💙</div>
+            <div class="counter" id="boy-display">0</div>
+        </div>
+
+        <!-- TEAM GIRL -->
+        <div id="girl-card" class="team-card girl-zone">
+            <div class="team-title">TEAM GIRL 🩷</div>
+            <div class="counter" id="girl-display">0</div>
+        </div>
+    </div>
+
+    <div class="test-controls">
+        <button class="reset-btn" onclick="resetDatabase()">Clear All Scores 🔄</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Paste your exact Firebase config object here
+        const firebaseConfig = {
+            apiKey: "AIzaSyDHOaPz_CFne-jJjKBnLBE6qbrHknHXlxQ",
+            databaseURL: "https://ap-votes-default-rtdb.firebaseio.com",
+            projectId: "ap-votes",
+            storageBucket: "ap-votes.firebasestorage.app",
+			messagingSenderId: "110000769688",
+			appId: "1:110000769688:web:d6a4688d3f99bef9351eed",
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        const boyCard = document.getElementById('boy-card');
+        const girlCard = document.getElementById('girl-card');
+        const boyDisplay = document.getElementById('boy-display');
+        const girlDisplay = document.getElementById('girl-display');
+
+        database.ref('votes').on('value', function(snapshot) {
+            const data = snapshot.val();
+            const boyVotes = data ? (data.boy || 0) : 0;
+            const girlVotes = data ? (data.girl || 0) : 0;
+
+            // 1. Update the display numbers smoothly
+            animateUpdate(boyDisplay, boyVotes);
+            animateUpdate(girlDisplay, girlVotes);
+
+            // 2. Determine who is leading and apply the heartbeat class
+            if (boyVotes === 0 && girlVotes === 0) {
+                // TIE AT ZERO: No one pulses
+                boyCard.classList.remove('heartbeat');
+                girlCard.classList.remove('heartbeat');
+            } else if (boyVotes > girlVotes) {
+                // BOY LEADING
+                boyCard.classList.add('heartbeat');
+                girlCard.classList.remove('heartbeat');
+            } else if (girlVotes > boyVotes) {
+                // GIRL LEADING
+                girlCard.classList.add('heartbeat');
+                boyCard.classList.remove('heartbeat');
+            } else {
+                // IT'S A PERFECT TIE: Both pulse together!
+                boyCard.classList.add('heartbeat');
+                girlCard.classList.add('heartbeat');
+            }
+        });
+
+        function animateUpdate(element, newValue) {
+            if(element.innerText !== String(newValue)) {
+                element.innerText = newValue;
+                element.style.transform = "scale(1.15)";
+                setTimeout(() => { element.style.transform = "scale(1)"; }, 150);
+            }
+        }
+
+        function resetDatabase() {
+            if(confirm("Wipe out the score values back to 0?")) {
+                database.ref('votes').set({
+                    boy: 0,
+                    girl: 0
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+<!-- Fancy ready
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Results Dashboard (Testing Mode)</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+        body {
+            background: #0b0b14;
+            background-image: 
+                radial-gradient(at 20% 20%, rgba(52, 152, 219, 0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 20%, rgba(232, 67, 147, 0.15) 0px, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .subtitle {
+            color: #6a6a8a;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+
+        .board {
+            display: flex;
+            width: 100%;
+            max-width: 1100px;
+            gap: 50px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            flex: 1;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+        }
+
+        /* Neon Borders and Glows */
+        .boy-zone {
+            border-top: 6px solid #00d2ff;
+            box-shadow: inset 0 0 30px rgba(0, 210, 255, 0.05), 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .girl-zone {
+            border-top: 6px solid #ff007f;
+            box-shadow: inset 0 0 30px rgba(255, 0, 127, 0.05), 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .team-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .boy-zone .team-title { color: #00d2ff; text-shadow: 0 0 15px rgba(0, 210, 255, 0.4); }
+        .girl-zone .team-title { color: #ff007f; text-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
+
+        .counter {
+            font-size: 9rem;
+            font-weight: 900;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            line-height: 1;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .boy-zone .counter { color: #ffffff; text-shadow: 0 0 30px rgba(0, 210, 255, 0.6); }
+        .girl-zone .counter { color: #ffffff; text-shadow: 0 0 30px rgba(255, 0, 127, 0.6); }
+
+        /* Testing utility panel */
+        .test-controls {
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+        }
+        .test-controls:hover {
+            opacity: 1;
+        }
+        .reset-btn {
+            background: #c0392b;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .reset-btn:hover { background: #e74c3c; }
+    </style>
+</head>
+<body>
+
+    <h1>LIVE PREDICTIONS</h1>
+    <div class="subtitle">Testing Environment Enabled</div>
+
+    <div class="board">
+      //  <!-- TEAM BOY 
+        <div class="team-card boy-zone">
+            <div class="team-title">TEAM BOY 💙</div>
+            <div class="counter" id="boy-display">0</div>
+        </div>
+
+    //    <!-- TEAM GIRL 
+        <div class="team-card girl-zone">
+            <div class="team-title">TEAM GIRL 🩷</div>
+            <div class="counter" id="girl-display">0</div>
+        </div>
+    </div>
+
+ //   <!-- UTILITY CONTROL 
+    <div class="test-controls">
+        <button class="reset-btn" onclick="resetDatabase()">Clear All Scores 🔄</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Paste your exact Firebase config object here
+        const firebaseConfig = {
+            apiKey: "AIzaSyDHOaPz_CFne-jJjKBnLBE6qbrHknHXlxQ",
+            databaseURL: "https://ap-votes-default-rtdb.firebaseio.com",
+            projectId: "ap-votes",
+            storageBucket: "ap-votes.firebasestorage.app",
+			messagingSenderId: "110000769688",
+			appId: "1:110000769688:web:d6a4688d3f99bef9351eed",
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        const boyDisplay = document.getElementById('boy-display');
+        const girlDisplay = document.getElementById('girl-display');
+
+        // Continuous listener matching values instantly
+        database.ref('votes').on('value', function(snapshot) {
+            const data = snapshot.val();
+            if (data) {
+                animateUpdate(boyDisplay, data.boy || 0);
+                animateUpdate(girlDisplay, data.girl || 0);
+            } else {
+                // Handle initial state or clean wipes safely
+                animateUpdate(boyDisplay, 0);
+                animateUpdate(girlDisplay, 0);
+            }
+        });
+
+        function animateUpdate(element, newValue) {
+            if(element.innerText !== String(newValue)) {
+                element.innerText = newValue;
+                element.style.transform = "scale(1.15)";
+                setTimeout(() => { element.style.transform = "scale(1)"; }, 150);
+            }
+        }
+
+        // Wipe the scores database clean for a brand new test session
+        function resetDatabase() {
+            if(confirm("Wipe out the score values back to 0?")) {
+                database.ref('votes').set({
+                    boy: 0,
+                    girl: 0
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+-->
+
+
+<!-- Simple
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Vote Results</title>
+   //CSS: This creates a beautiful, dark mode split screen dashboard
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #1a1a24; color: white; margin: 0; text-align: center; }
+        h1 { font-size: 42px; margin-top: 40px; color: #f1f2f6; text-transform: uppercase; letter-spacing: 2px; }
+        .container { display: flex; justify-content: center; align-items: center; gap: 40px; margin-top: 60px; padding: 20px; }
+        .card { background: #262636; padding: 40px; border-radius: 20px; width: 220px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); transition: 0.3s; }
+        .boy-card { border-bottom: 10px solid #3498db; }
+        .girl-card { border-bottom: 10px solid #e84393; }
+        h2 { font-size: 28px; margin: 0 0 20px 0; letter-spacing: 1px; }
+        .boy-title { color: #3498db; }
+        .girl-title { color: #e84393; }
+        .counter { font-size: 80px; font-weight: bold; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <h1>📊 Live Voting Dashboard</h1>
+
+    <div class="container">
+       // <!-- Blue Team Boy Card
+        <div class="card boy-card">
+            <h2 class="boy-title">TEAM BOY 💙</h2>
+            <div class="counter" id="boy-display">0</div>
+        </div>
+
+       // <!-- Pink Team Girl Card 
+        <div class="card girl-card">
+            <h2 class="girl-title">TEAM GIRL 🩷</h2>
+            <div class="counter" id="girl-display">0</div>
+        </div>
+    </div>
+
+  //  <!-- Load the Firebase Engines 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script>
+        // 1. PASTE YOUR EXACT SAME FIREBASE CONFIG HERE:
+        const firebaseConfig = {
+            apiKey: "AIzaSyDHOaPz_CFne-jJjKBnLBE6qbrHknHXlxQ",
+            databaseURL: "https://ap-votes-default-rtdb.firebaseio.com",
+            projectId: "ap-votes",
+            storageBucket: "ap-votes.firebasestorage.app",
+			messagingSenderId: "110000769688",
+			appId: "1:110000769688:web:d6a4688d3f99bef9351eed",
+        };
+        
+        // 2. Initialize connection
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // 3. THE MAGIC LISTEN FUNCTION: 
+        // This watches the 'votes' folder in your cloud database 24/7.
+        database.ref('votes').on('value', function(snapshot) {
+            // Grab the current values from the cloud
+            const data = snapshot.val();
+            
+            if (data) {
+                // Update the numbers on the screen dynamically
+                document.getElementById('boy-display').innerText = data.boy || 0;
+                document.getElementById('girl-display').innerText = data.girl || 0;
+            }
+        });
+    </script>
+</body>
+</html>
+-->
