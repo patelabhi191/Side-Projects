@@ -150,6 +150,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   -webkit-backdrop-filter:blur(var(--blur));backdrop-filter:blur(var(--blur));
   transition:border-color .18s,background .18s}
 .card.picked{border-color:var(--violet);background:var(--pane-up);box-shadow:0 0 0 1px var(--violet)}
+.card.mine{border-left:3px solid var(--violet)}
 .card-body{flex:1 1 140px;min-width:0}
 .card-title{font-family:"Outfit",sans-serif;font-weight:500;font-size:1rem;letter-spacing:-.01em;overflow-wrap:anywhere}
 .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -202,7 +203,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .empty h3{font-family:"Outfit",sans-serif;font-weight:500;font-size:1.02rem;margin-bottom:5px}
 .empty p{color:var(--sub);font-size:.86rem;max-width:32ch;margin:0 auto}
 
-.tabs{display:flex;gap:6px;margin-bottom:15px;overflow-x:auto;padding-bottom:4px;
+.tabs{display:flex;gap:6px;margin-bottom:11px;overflow-x:auto;padding-bottom:4px;
   -webkit-overflow-scrolling:touch;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tabs button{font:inherit;font-size:.84rem;font-weight:500;cursor:pointer;white-space:nowrap;
@@ -210,6 +211,7 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   background:var(--pane);border:1px solid var(--line);transition:all .18s}
 .tabs button[aria-selected="true"]{background:var(--violet);color:#fff;border-color:transparent;box-shadow:var(--glow-btn)}
 .tabs .n{font-family:var(--mono);font-size:.74rem;opacity:.8;margin-left:5px}
+.scopebar{display:flex;justify-content:flex-end;margin-bottom:14px}
 
 .bulkbar{position:fixed;left:14px;right:14px;bottom:calc(16px + var(--safe-b));
   transform:translateY(150%);z-index:60;display:flex;align-items:center;gap:9px;
@@ -229,12 +231,12 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
 .ap small{position:absolute;bottom:7px;font-size:.48rem;font-weight:500;opacity:.72;letter-spacing:.08em}
 body.delmode .ap{opacity:0;pointer-events:none;transform:scale(.8)}
 
-.scrim{position:fixed;inset:0;z-index:70;display:none;background:var(--scrim-bg);
+.scrim{position:fixed;inset:0;z-index:100;display:none;background:var(--scrim-bg);
   -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
 .scrim.on{display:flex;align-items:flex-end;justify-content:center}
-#scrim-config{z-index:76}
-#scrim-gate{z-index:80}
-#scrim-confirm{z-index:86}
+#scrim-config{z-index:106}
+#scrim-gate{z-index:110}
+#scrim-confirm{z-index:116}
 .sheet{width:100%;max-height:92dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;
   border-radius:26px 26px 0 0;padding:20px 18px calc(20px + var(--safe-b));
   background:var(--sheet-bg);
@@ -271,6 +273,7 @@ body.delmode .ap{opacity:0;pointer-events:none;transform:scale(.8)}
   border:0;background:none;padding:9px 16px;border-radius:99px;min-height:40px;
   transition:background .18s,color .18s}
 .seg button[aria-selected="true"]{background:var(--violet);color:#fff;box-shadow:var(--glow-btn)}
+.seg.flat{margin-left:0;background:var(--pane)}
 
 .field{margin-bottom:13px}
 .field.hide{display:none}
@@ -303,42 +306,31 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
 .umenu .btn{flex:1}
 
 .toast{position:fixed;left:50%;top:calc(16px + var(--safe-t));transform:translateX(-50%) translateY(-24px);
-  z-index:95;opacity:0;pointer-events:none;max-width:86vw;text-align:center;
+  z-index:120;opacity:0;pointer-events:none;max-width:86vw;text-align:center;
   padding:12px 20px;border-radius:99px;font-size:.87rem;font-weight:500;
   background:var(--toast-bg);color:var(--toast-fg);box-shadow:0 10px 34px rgba(20,10,43,.4);
   transition:opacity .26s,transform .26s}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
-.hint{margin:20px 0 0;padding:13px 15px;border-radius:var(--r-md);font-size:.8rem;color:var(--sub);
-  background:var(--pane);border:1px solid var(--line)}
-.hint b{color:var(--iris);font-weight:600}
-
 /* ---------- lock screen ---------- */
 .lock{position:fixed;inset:0;z-index:90;display:none;background:var(--canvas);
   overflow-y:auto;-webkit-overflow-scrolling:touch}
 .lock.on{display:block}
-.lock-in{min-height:100dvh;max-width:420px;margin:0 auto;
-  padding:calc(28px + var(--safe-t)) 22px calc(28px + var(--safe-b));
-  display:flex;flex-direction:column;justify-content:center;gap:20px}
+.lock-in{min-height:100dvh;max-width:400px;margin:0 auto;
+  padding:calc(28px + var(--safe-t)) 22px calc(24px + var(--safe-b));
+  display:flex;flex-direction:column;justify-content:center;gap:18px}
 .lock-brand{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
-.lock-brand .mark{width:52px;height:52px;border-radius:17px}
-.lock-brand .wordmark{font-size:1.4rem}
-.lock h2{font-family:"Outfit",sans-serif;font-weight:500;font-size:1.05rem;text-align:center}
-.lock .sub{font-size:.85rem;color:var(--sub);text-align:center;margin-top:-12px}
+.lock-brand .mark{width:54px;height:54px;border-radius:18px}
+.lock-brand .wordmark{font-size:1.42rem}
+.lock h2{font-family:"Outfit",sans-serif;font-weight:500;font-size:1.06rem;text-align:center}
+.lock .sub{font-size:.85rem;color:var(--sub);text-align:center;margin-top:-10px}
 
-.whos{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
-.whos button{display:flex;align-items:center;gap:9px;padding:9px 15px 9px 9px;border-radius:99px;
-  background:var(--pane);border:1px solid var(--line);color:var(--ink);cursor:pointer;
-  font:inherit;font-size:.9rem;font-weight:500;min-height:52px;transition:border-color .18s,background .18s}
-.whos button[aria-selected="true"]{border-color:var(--violet);background:var(--pane-up);box-shadow:var(--glow-btn)}
-.whos .av{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:#fff;
-  font-family:"Outfit",sans-serif;font-weight:600;font-size:.9rem;background:var(--grad-primary)}
-
-.dots{display:flex;gap:13px;justify-content:center;margin:4px 0}
-.dots i{width:15px;height:15px;border-radius:50%;border:2px solid var(--line-lit);
+.dots{display:flex;gap:14px;justify-content:center;margin:2px 0}
+.dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--line-lit);
   background:transparent;transition:background .15s,border-color .15s,transform .15s}
 .dots i.f{background:var(--violet);border-color:var(--violet);transform:scale(1.12)}
 .dots.bad i{border-color:var(--rose)}
+.dots.ok i{background:var(--mint);border-color:var(--mint)}
 .dots.bad{animation:shake .4s}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}
   40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
@@ -349,9 +341,11 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
   background:var(--pane);border:1px solid var(--line);transition:transform .12s,background .16s}
 .keys button:active{transform:scale(.93);background:var(--pane-up)}
 .keys button.fn{font-size:.9rem;color:var(--sub);background:transparent;border-color:transparent}
-.lock-foot{text-align:center}
-.linkbtn{background:none;border:0;color:var(--sub);font:inherit;font-size:.83rem;
-  text-decoration:underline;cursor:pointer;padding:10px;min-height:44px}
+.lock-foot{display:flex;justify-content:center;margin-top:4px}
+.gearbtn{width:50px;height:50px;border-radius:16px;cursor:pointer;display:grid;place-items:center;
+  color:var(--sub);background:var(--pane);border:1px solid var(--line);
+  transition:transform .16s,color .16s,background .16s}
+.gearbtn:active{transform:scale(.93) rotate(35deg);color:var(--iris);background:var(--pane-up)}
 
 :focus-visible{outline:2.5px solid var(--violet);outline-offset:2px;border-radius:8px}
 
@@ -375,6 +369,7 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
   .nav button{flex:1;padding:10px 6px;font-size:.85rem}
   .seg{margin-left:0;flex:1 1 100%}
   .seg button{flex:1}
+  .scopebar .seg{flex:0 0 auto}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style>
@@ -395,13 +390,17 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
       </div>
       <div class="wordmark">Favour for <em>U</em></div>
     </div>
-    <h2 id="lock-h">Who's checking in?</h2>
-    <div class="whos" id="whos"></div>
-    <p class="sub" id="lock-sub">Pick your name, then enter your PIN.</p>
+    <h2 id="lock-h">Enter your PIN</h2>
+    <p class="sub" id="lock-sub">Four digits signs you straight in.</p>
     <div class="dots" id="lock-dots"><i></i><i></i><i></i><i></i></div>
     <div class="keys" id="lock-keys"></div>
     <div class="lock-foot">
-      <button class="linkbtn" onclick="openGate('bootstrap')">Open admin panel</button>
+      <button class="gearbtn" onclick="openAdmin(true)" aria-label="Admin panel" title="Admin panel">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="3.1" stroke="currentColor" stroke-width="1.9"/>
+          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.11a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.11A1.7 1.7 0 0 0 4.6 8.9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1.03-1.56V3a2 2 0 1 1 4 0v.11a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9c.25.6.83 1 1.48 1.03H21a2 2 0 1 1 0 4h-.11A1.7 1.7 0 0 0 19.4 15Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 </div>
@@ -420,7 +419,7 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
       <div class="tagline">Ask once. Check in daily.</div>
     </div>
   </div>
-  <button class="mechip" id="mechip" onclick="askSignOut()" title="Sign out">
+  <button class="mechip" onclick="askSignOut()" title="Sign out">
     <span class="av" id="me-av">?</span>
     <span id="me-name">—</span>
     <span class="dot" id="syncdot" title="Sync status"></span>
@@ -442,6 +441,12 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
       <button role="tab" aria-selected="false" data-s="scheduled" onclick="setTab('scheduled')">Scheduled<span class="n" id="c-scheduled">0</span></button>
       <button role="tab" aria-selected="false" data-s="completed" onclick="setTab('completed')">Completed<span class="n" id="c-completed">0</span></button>
       <button role="tab" aria-selected="false" data-s="missed" onclick="setTab('missed')">Missed<span class="n" id="c-missed">0</span></button>
+    </div>
+    <div class="scopebar">
+      <div class="seg flat" role="group" aria-label="Whose favours">
+        <button id="sc-all" aria-selected="true" onclick="setScope('all')">Everyone</button>
+        <button id="sc-mine" aria-selected="false" onclick="setScope('mine')">Mine</button>
+      </div>
     </div>
     <div class="stack" id="dueslist"></div>
   </section>
@@ -467,7 +472,6 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
       </button>
     </div>
     <div class="stack" id="tasklist"></div>
-    <p class="hint"><b>Prototype note.</b> Recurrence runs in this browser whenever the app is open. On a server it becomes a scheduled job that runs whether anyone is looking or not — that's what sends the notifications.</p>
   </section>
 </main>
 
@@ -477,7 +481,7 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
   <button class="btn tiny danger" onclick="askDeletePicked()">Delete</button>
 </div>
 
-<button class="ap" onclick="openGate('admin')" aria-label="Open admin panel" title="Admin panel">
+<button class="ap" onclick="openGate()" aria-label="Open admin panel" title="Admin panel">
   AP<small>ADMIN</small>
 </button>
 
@@ -544,7 +548,7 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
 
     <div class="field"><label for="cfg-space">Household key</label>
       <input type="text" id="cfg-space" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="home">
-      <div class="help">Both phones must use exactly the same key to see each other's data.</div></div>
+      <div class="help">Both phones must use exactly the same key. Data lands under <code>/favour/&lt;key&gt;</code>.</div></div>
 
     <div class="field"><label for="cfg-token">Auth token <span style="font-weight:400">(optional)</span></label>
       <input type="text" id="cfg-token" class="url" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Leave blank for open rules">
@@ -557,19 +561,19 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
 
     <div class="sect" style="margin-top:22px">Transfer</div>
     <div class="actions" style="margin-top:0">
-      <button class="btn" onclick="askPush()" id="cfg-push">Push to cloud</button>
-      <button class="btn" onclick="askPull()" id="cfg-pull">Pull from cloud</button>
+      <button class="btn" onclick="askPush()">Push to cloud</button>
+      <button class="btn" onclick="askPull()">Pull from cloud</button>
     </div>
 
     <div class="warnbox">
       <b>Read this before going live</b>
-      With open database rules, anyone who has the URL can read and change everything — including PINs, which are stored in plain text. Lock your rules down to the household key at minimum, and don't reuse a PIN you use anywhere else.
+      With open database rules, anyone who has the URL can read and change everything — including PINs, which are stored in plain text. Don't reuse a PIN you use anywhere else.
     </div>
 
     <div class="sect" style="margin-top:22px">Admin access</div>
     <div class="field"><label for="cfg-adminpin">Admin PIN</label>
-      <input type="text" id="cfg-adminpin" class="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000">
-      <div class="help">Required to open the admin panel. Shared across devices.</div></div>
+      <input type="text" id="cfg-adminpin" class="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="6767">
+      <div class="help">Opens the admin panel. Cannot match any user's login PIN.</div></div>
     <div class="err" id="cfg-err"></div>
     <div class="actions">
       <button class="btn danger" onclick="askResetLocal()">Reset this device</button>
@@ -609,7 +613,7 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
       <input type="text" id="u-id" placeholder="thabi" autocomplete="off" autocapitalize="none" autocorrect="off"></div>
     <div class="field"><label for="u-pin">Login PIN</label>
       <input type="text" id="u-pin" class="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000" autocomplete="off">
-      <div class="help">Exactly 4 digits. This is what they type on the lock screen.</div></div>
+      <div class="help">Exactly 4 digits, unique to this person — the PIN alone signs them in.</div></div>
     <div class="err" id="u-err"></div>
     <div class="actions">
       <button class="btn ghost" onclick="close_('user')">Cancel</button>
@@ -687,14 +691,13 @@ const MIN=60000, HOUR=3600000, DAY=86400000;
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const REP={daily:'Every day',weekdays:'Weekdays',once:'Just once'};
 
-let DB={users:[],tasks:[],instances:[],settings:{theme:'dark',adminPin:'0000'},updatedAt:0,writer:''};
+let DB={users:[],tasks:[],instances:[],settings:{theme:'dark',adminPin:'6767'},updatedAt:0,writer:''};
 let CFG={url:'',space:'home',token:'',on:false};
 let ME=null, DEVICE='';
 let editUser=null, editTask=null, delMode=false, picked=new Set();
-let tab='ongoing', view='dues', cfAction=null, gateMode='admin', pickedUser=null;
+let tab='ongoing', scope='all', view='dues', cfAction=null;
 let pushTimer=null, pullTimer=null, syncState='off';
 
-/* ---------- storage shim: Claude storage → localStorage → memory ---------- */
 const MEM={};
 const LS={
   async get(k){
@@ -729,9 +732,13 @@ function toast(msg){
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('on'),2400);
 }
 function open_(n){ document.getElementById('scrim-'+n).classList.add('on'); }
-function close_(n){ document.getElementById('scrim-'+n).classList.remove('on'); }
+function close_(n){
+  document.getElementById('scrim-'+n).classList.remove('on');
+  if(!ME) renderLock();
+}
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){ const s=[...document.querySelectorAll('.scrim.on')].pop(); if(s) s.classList.remove('on'); }
+  if(e.key==='Escape'){ const s=[...document.querySelectorAll('.scrim.on')].pop();
+    if(s) close_(s.id.replace('scrim-','')); }
 });
 function askConfirm(title,body,label,fn){
   document.getElementById('cf-h').textContent=title;
@@ -746,8 +753,16 @@ function normalise(){
   DB.users??=[]; DB.tasks??=[]; DB.instances??=[];
   DB.settings??={};
   DB.settings.theme??='dark';
-  DB.settings.adminPin??='0000';
-  DB.users.forEach(u=>{ if(!/^\d{4}$/.test(u.pin||'')) u.pin='0000'; delete u.noPin; });
+  DB.settings.adminPin??='6767';
+  const seen=new Set();
+  DB.users.forEach(u=>{
+    delete u.noPin;
+    if(!/^\d{4}$/.test(u.pin||'')||seen.has(u.pin)){
+      let n=1000; while(seen.has(String(n))||String(n)===DB.settings.adminPin) n++;
+      u.pin=String(n);
+    }
+    seen.add(u.pin);
+  });
 }
 async function persist(){ await LS.set('favour-db',JSON.stringify(DB)); }
 async function save(){
@@ -757,7 +772,7 @@ async function save(){
 }
 function fbBase(){
   const u=(CFG.url||'').replace(/\/+$/,'');
-  return `${u}/favour/${encodeURIComponent(CFG.space||'home')}.json` + (CFG.token?`?auth=${encodeURIComponent(CFG.token)}`:'');
+  return `${u}/favour/${encodeURIComponent(CFG.space||'home')}.json`+(CFG.token?`?auth=${encodeURIComponent(CFG.token)}`:'');
 }
 async function fbGet(){
   const r=await fetch(fbBase(),{cache:'no-store'});
@@ -773,12 +788,12 @@ function setSyncDot(state,msg){
   syncState=state;
   const d=document.getElementById('syncdot');
   d.className='dot'+(state==='ok'?' ok':state==='error'?' err':state==='busy'?' busy':'');
-  d.title = state==='ok'?'Synced':state==='error'?('Sync error: '+(msg||'')):state==='busy'?'Syncing…':'Sync off';
+  d.title=state==='ok'?'Synced':state==='error'?('Sync error: '+(msg||'')):state==='busy'?'Syncing…':'Sync off';
   const s=document.getElementById('cfg-status');
-  if(s) s.textContent = !CFG.on?'Not connected'
-    : state==='ok'?'Connected · last sync '+clock(Date.now())
-    : state==='error'?('Error — '+(msg||'unknown'))
-    : 'Connecting…';
+  if(s) s.textContent=!CFG.on?'Not connected'
+    :state==='ok'?'Connected · last sync '+clock(Date.now())
+    :state==='error'?('Error — '+(msg||'unknown'))
+    :'Connecting…';
 }
 function schedulePush(){
   clearTimeout(pushTimer);
@@ -797,31 +812,24 @@ async function pull(){
     if(remote&&typeof remote==='object'&&(remote.updatedAt||0)>(DB.updatedAt||0)&&remote.writer!==DEVICE){
       DB=remote; normalise(); await persist();
       applyTheme(DB.settings.theme);
-      if(ME&&!user(ME)) { signOut(true); return; }
-      render(); renderUsers();
+      if(ME&&!user(ME)){ signOut(true); return; }
+      render(); renderUsers(); renderLock();
       toast('Updated from the other device');
     }
   }catch(e){ setSyncDot('error',e.message); }
 }
-function startSyncLoop(){
-  clearInterval(pullTimer);
-  if(CFG.on) pullTimer=setInterval(pull,8000);
-}
+function startSyncLoop(){ clearInterval(pullTimer); if(CFG.on) pullTimer=setInterval(pull,8000); }
 
-/* ---------- theme ---------- */
 function applyTheme(t){
   document.documentElement.setAttribute('data-theme',t);
-  document.getElementById('tc').setAttribute('content', t==='light'?'#F3F0FD':'#140A2B');
-  document.getElementById('seg-dark').setAttribute('aria-selected', t!=='light');
-  document.getElementById('seg-light').setAttribute('aria-selected', t==='light');
+  document.getElementById('tc').setAttribute('content',t==='light'?'#F3F0FD':'#140A2B');
+  document.getElementById('seg-dark').setAttribute('aria-selected',t!=='light');
+  document.getElementById('seg-light').setAttribute('aria-selected',t==='light');
 }
-function setTheme(t){
-  DB.settings.theme=t; applyTheme(t); save();
-  toast(t==='light'?'Light theme on':'Dark theme on');
-}
+function setTheme(t){ DB.settings.theme=t; applyTheme(t); save(); toast(t==='light'?'Light theme on':'Dark theme on'); }
 
 /* ---------- PIN pad ---------- */
-function buildPad(keysEl, dotsEl, onDigit){
+function buildPad(keysEl,onDigit){
   keysEl.innerHTML='';
   ['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(k=>{
     const b=document.createElement('button');
@@ -832,51 +840,50 @@ function buildPad(keysEl, dotsEl, onDigit){
     keysEl.appendChild(b);
   });
 }
-function paintDots(dotsEl,n,bad){
-  [...dotsEl.children].forEach((d,i)=>d.className=i<n?'f':'');
-  dotsEl.classList.toggle('bad',!!bad);
-  if(bad) setTimeout(()=>dotsEl.classList.remove('bad'),450);
+function paintDots(el,n,state){
+  [...el.children].forEach((d,i)=>d.className=i<n?'f':'');
+  el.classList.remove('bad','ok');
+  if(state) el.classList.add(state);
+  if(state==='bad') setTimeout(()=>el.classList.remove('bad'),450);
 }
 
 /* ---------- lock screen ---------- */
 let lockBuf='';
 function renderLock(){
-  const el=document.getElementById('whos');
   const active=DB.users.filter(u=>!u.blocked);
-  if(!active.length){
-    el.innerHTML='';
-    document.getElementById('lock-h').textContent='No users yet';
-    document.getElementById('lock-sub').textContent='Open the admin panel below to add someone.';
-    document.getElementById('lock-dots').style.display='none';
-    document.getElementById('lock-keys').style.display='none';
-    return;
-  }
-  document.getElementById('lock-dots').style.display='';
-  document.getElementById('lock-keys').style.display='';
-  if(!pickedUser||!active.find(u=>u.id===pickedUser)) pickedUser=active[0].id;
-  el.innerHTML=active.map(u=>`<button aria-selected="${u.id===pickedUser}" onclick="pickUser('${u.id}')">
-      <span class="av">${esc(u.displayName[0].toUpperCase())}</span>${esc(u.displayName)}</button>`).join('');
-  const u=user(pickedUser);
-  document.getElementById('lock-h').textContent="Who's checking in?";
-  document.getElementById('lock-sub').textContent = u?`Enter ${u.displayName}'s 4-digit PIN.`:'Pick your name, then enter your PIN.';
+  document.getElementById('lock-h').textContent=active.length?'Enter your PIN':'No users yet';
+  document.getElementById('lock-sub').textContent=active.length
+    ? 'Four digits signs you straight in.'
+    : 'Tap the gear below and use the admin PIN to add someone.';
 }
-function pickUser(id){ pickedUser=id; lockBuf=''; paintDots(document.getElementById('lock-dots'),0); renderLock(); }
 function lockDigit(k){
   const dots=document.getElementById('lock-dots');
   if(k==='⌫'){ lockBuf=lockBuf.slice(0,-1); paintDots(dots,lockBuf.length); return; }
   if(lockBuf.length>=4) return;
   lockBuf+=k; paintDots(dots,lockBuf.length);
-  if(lockBuf.length===4){
-    const u=user(pickedUser);
-    if(u&&u.pin===lockBuf){ signIn(u.id); lockBuf=''; paintDots(dots,0); }
-    else{ paintDots(dots,4,true); setTimeout(()=>{ lockBuf=''; paintDots(dots,0); },450); }
+  if(lockBuf.length<4) return;
+
+  const entered=lockBuf;
+  const match=DB.users.find(u=>u.pin===entered&&!u.blocked);
+  if(match){
+    paintDots(dots,4,'ok');
+    setTimeout(()=>{ lockBuf=''; paintDots(dots,0); signIn(match.id); },220);
+    return;
   }
+  if(entered===DB.settings.adminPin){
+    paintDots(dots,4,'ok');
+    setTimeout(()=>{ lockBuf=''; paintDots(dots,0); openAdmin(true); },220);
+    return;
+  }
+  paintDots(dots,4,'bad');
+  setTimeout(()=>{ lockBuf=''; paintDots(dots,0); },450);
 }
 async function signIn(id){
   ME=id; await LS.set('favour-session',id);
   document.getElementById('lock').classList.remove('on');
   document.body.classList.remove('locked');
   paintMe(); render();
+  const u=user(id); if(u) toast('Welcome back, '+u.displayName);
 }
 function signOut(silent){
   ME=null; LS.set('favour-session','');
@@ -896,12 +903,12 @@ function paintMe(){
   document.getElementById('me-name').textContent=u?u.displayName:'—';
 }
 
-/* ---------- admin gate ---------- */
+/* ---------- admin gate (from inside the app) ---------- */
 let gateBuf='';
-function openGate(mode){
-  gateMode=mode; gateBuf=''; paintDots(document.getElementById('gate-dots'),0);
-  document.getElementById('gate-sub').textContent =
-    DB.settings.adminPin==='0000' ? 'Default PIN is 0000 — change it in Configuration.' : 'Enter the admin PIN to continue.';
+function openGate(){
+  gateBuf=''; paintDots(document.getElementById('gate-dots'),0);
+  document.getElementById('gate-sub').textContent=
+    DB.settings.adminPin==='6767'?'Default PIN is 6767 — change it in Configuration.':'Enter the admin PIN to continue.';
   open_('gate');
 }
 function gateDigit(k){
@@ -909,12 +916,13 @@ function gateDigit(k){
   if(k==='⌫'){ gateBuf=gateBuf.slice(0,-1); paintDots(dots,gateBuf.length); return; }
   if(gateBuf.length>=4) return;
   gateBuf+=k; paintDots(dots,gateBuf.length);
-  if(gateBuf.length===4){
-    if(gateBuf===DB.settings.adminPin){
-      close_('gate'); gateBuf=''; paintDots(dots,0); openAdmin();
-    }else{
-      paintDots(dots,4,true); setTimeout(()=>{ gateBuf=''; paintDots(dots,0); },450);
-    }
+  if(gateBuf.length<4) return;
+  if(gateBuf===DB.settings.adminPin){
+    paintDots(dots,4,'ok');
+    setTimeout(()=>{ close_('gate'); gateBuf=''; paintDots(dots,0); openAdmin(); },220);
+  }else{
+    paintDots(dots,4,'bad');
+    setTimeout(()=>{ gateBuf=''; paintDots(dots,0); },450);
   }
 }
 
@@ -940,57 +948,45 @@ function readConfigFields(){
 }
 async function saveCfg(){ await LS.set('favour-cfg',JSON.stringify(CFG)); }
 async function saveConfig(){
-  const c=readConfigFields();
-  if(c.url&&!/^https:\/\/[a-z0-9-]+.*firebase(io|database)\.(com|app)$/i.test(c.url.replace(/\/+$/,''))){
-    if(!confirmLooksOdd(c.url)) return;
-  }
-  CFG={...CFG,...c};
+  CFG={...CFG,...readConfigFields()};
   await saveCfg(); startSyncLoop(); setSyncDot(CFG.on?'busy':'off');
   toast('Configuration saved');
   if(CFG.on) pull();
 }
-function confirmLooksOdd(url){
-  document.getElementById('cfg-err').textContent="That doesn't look like a Realtime Database URL — it should end in .firebaseio.com or .firebasedatabase.app. Saved anyway.";
-  return true;
-}
 function setSync(on){
-  CFG.on=on;
-  document.getElementById('seg-syncon').setAttribute('aria-selected',on);
-  document.getElementById('seg-syncoff').setAttribute('aria-selected',!on);
   if(on&&!document.getElementById('cfg-url').value.trim()){
-    CFG.on=false;
-    document.getElementById('seg-syncon').setAttribute('aria-selected',false);
-    document.getElementById('seg-syncoff').setAttribute('aria-selected',true);
+    document.getElementById('cfg-err').style.color='';
     document.getElementById('cfg-err').textContent='Enter a database URL first.';
     return;
   }
+  CFG.on=on;
+  document.getElementById('seg-syncon').setAttribute('aria-selected',on);
+  document.getElementById('seg-syncoff').setAttribute('aria-selected',!on);
   document.getElementById('cfg-err').textContent='';
   saveConfig();
 }
 async function testConn(){
   const c=readConfigFields();
-  const btn=document.getElementById('cfg-test');
-  const err=document.getElementById('cfg-err');
-  if(!c.url){ err.textContent='Enter a database URL first.'; return; }
+  const btn=document.getElementById('cfg-test'), err=document.getElementById('cfg-err');
+  if(!c.url){ err.style.color=''; err.textContent='Enter a database URL first.'; return; }
   const keep={...CFG}; CFG={...CFG,...c};
   btn.disabled=true; btn.textContent='Testing…'; err.textContent='';
   try{
     const data=await fbGet();
     const n=data&&data.users?data.users.length:0;
     err.style.color='var(--mint)';
-    err.textContent = data ? `Connected. Found existing data (${n} user${n===1?'':'s'}).` : 'Connected. That key is empty — pushing will create it.';
+    err.textContent=data?`Connected. Found existing data (${n} user${n===1?'':'s'}).`:'Connected. That key is empty — pushing will create it.';
     await saveCfg();
   }catch(e){
-    CFG=keep;
-    err.style.color='';
-    err.textContent='Failed: '+e.message+'. Check the URL, the rules, and that the key exists.';
+    CFG=keep; err.style.color='';
+    err.textContent='Failed: '+e.message+'. Check the URL, the rules, and the household key.';
   }finally{
     btn.disabled=false; btn.textContent='Test connection';
     setTimeout(()=>{ err.style.color=''; },4000);
   }
 }
 function askPush(){
-  askConfirm('Push this device to the cloud?','Whatever is in Firebase under that household key will be overwritten by what is on this phone.','Push',
+  askConfirm('Push this device to the cloud?','Whatever is under that household key in Firebase will be overwritten by what is on this phone.','Push',
     async()=>{
       try{ DB.updatedAt=Date.now(); DB.writer=DEVICE; await fbPut(DB); setSyncDot('ok'); toast('Pushed to cloud'); }
       catch(e){ setSyncDot('error',e.message); toast('Push failed: '+e.message); }
@@ -1004,24 +1000,25 @@ function askPull(){
         if(!remote){ toast('Nothing stored under that key yet'); return; }
         DB=remote; normalise(); await persist(); applyTheme(DB.settings.theme);
         if(ME&&!user(ME)) signOut(true);
-        render(); renderUsers(); setSyncDot('ok'); toast('Pulled from cloud');
+        render(); renderUsers(); renderLock(); setSyncDot('ok'); toast('Pulled from cloud');
       }catch(e){ setSyncDot('error',e.message); toast('Pull failed: '+e.message); }
     });
 }
 function saveAdminPin(){
   const v=document.getElementById('cfg-adminpin').value.trim();
-  const err=document.getElementById('cfg-err');
-  if(!/^\d{4}$/.test(v)){ err.style.color=''; err.textContent='Admin PIN must be exactly 4 digits.'; return; }
+  const err=document.getElementById('cfg-err'); err.style.color='';
+  if(!/^\d{4}$/.test(v)){ err.textContent='Admin PIN must be exactly 4 digits.'; return; }
+  if(DB.users.some(u=>u.pin===v)){ err.textContent='A user already logs in with that PIN. Pick a different one.'; return; }
   DB.settings.adminPin=v; save(); err.textContent=''; toast('Admin PIN updated');
 }
 function askResetLocal(){
   askConfirm('Reset this device?','Local users, favours and history are wiped and the demo data comes back. Firebase is not touched.','Reset',
-    async()=>{ DB={users:[],tasks:[],instances:[],settings:{theme:DB.settings.theme,adminPin:'0000'}}; seed(); normalise();
+    async()=>{ DB={users:[],tasks:[],instances:[],settings:{theme:DB.settings.theme,adminPin:'6767'}}; seed(); normalise();
       await save(); signOut(true); close_('config'); close_('admin'); toast('Device reset'); });
 }
 
 /* ---------- scheduling engine ---------- */
-function nextOccurrence(t, after){
+function nextOccurrence(t,after){
   const [h,m]=t.time.split(':').map(Number);
   const d=new Date(after); d.setHours(h,m,0,0);
   if(+d<=after) d.setDate(d.getDate()+1);
@@ -1030,7 +1027,7 @@ function nextOccurrence(t, after){
   return +d;
 }
 const pendingFor=id=>DB.instances.find(i=>i.taskId===id&&i.status==='pending');
-function queueNext(t, after){
+function queueNext(t,after){
   if(t.repeat==='once') return false;
   if(pendingFor(t.id)) return false;
   DB.instances.push({id:uid(),taskId:t.id,dueAt:nextOccurrence(t,after),graceMins:t.graceMins,status:'pending'});
@@ -1039,9 +1036,7 @@ function queueNext(t, after){
 function reconcile(){
   let changed=false;
   DB.instances.forEach(i=>{
-    if(i.status==='pending'&&Date.now()>=i.dueAt+i.graceMins*MIN){
-      i.status='missed'; i.missedAt=Date.now(); changed=true;
-    }
+    if(i.status==='pending'&&Date.now()>=i.dueAt+i.graceMins*MIN){ i.status='missed'; i.missedAt=Date.now(); changed=true; }
   });
   DB.tasks.forEach(t=>{ if(queueNext(t,Date.now())) changed=true; });
   if(changed) save();
@@ -1069,11 +1064,21 @@ function setTab(s){
   document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.s===s));
   renderDues();
 }
+function setScope(s){
+  scope=s;
+  document.getElementById('sc-all').setAttribute('aria-selected',s==='all');
+  document.getElementById('sc-mine').setAttribute('aria-selected',s==='mine');
+  renderDues();
+}
 
 /* ---------- daily dues ---------- */
 function renderDues(){
   const groups={ongoing:[],scheduled:[],completed:[],missed:[]};
-  DB.instances.forEach(i=>{ const s=statusOf(i); if(task(i.taskId)&&groups[s]) groups[s].push(i); });
+  DB.instances.forEach(i=>{
+    const t=task(i.taskId); if(!t) return;
+    if(scope==='mine'&&t.assigneeId!==ME) return;
+    const s=statusOf(i); if(groups[s]) groups[s].push(i);
+  });
   for(const k in groups) document.getElementById('c-'+k).textContent=groups[k].length;
   groups.ongoing.sort((a,b)=>a.dueAt-b.dueAt);
   groups.scheduled.sort((a,b)=>a.dueAt-b.dueAt);
@@ -1081,9 +1086,10 @@ function renderDues(){
   groups.missed.sort((a,b)=>b.dueAt-a.dueAt);
 
   const rows=groups[tab], el=document.getElementById('dueslist');
+  const mineWord=scope==='mine'?' assigned to you':'';
   const blank={
     ongoing:['Nothing due right now','When a favour reaches its time it lands here with a countdown until it counts as missed.'],
-    scheduled:['Nothing lined up','Recurring favours queue their next one automatically once the current one closes.'],
+    scheduled:['Nothing lined up'+mineWord,'Recurring favours queue their next one automatically once the current one closes.'],
     completed:['No check-ins yet','Once someone marks a favour done it moves here with the time they did it.'],
     missed:['Nothing missed','Favours that pass their grace window without a check-in show up here.']
   }[tab];
@@ -1092,7 +1098,8 @@ function renderDues(){
   el.innerHTML=rows.map(i=>{
     const t=task(i.taskId), u=user(t.assigneeId);
     const initial=u?esc(u.displayName[0].toUpperCase()):'?';
-    let side='', chip='', lead='';
+    const isMine=t.assigneeId===ME;
+    let side='',chip='',lead='';
     if(tab==='ongoing'){
       const total=i.graceMins*MIN, left=Math.max(0,i.dueAt+total-Date.now());
       const pct=left/total, C=2*Math.PI*21, mins=Math.ceil(left/MIN);
@@ -1117,11 +1124,11 @@ function renderDues(){
       chip=`<span class="chip rose">Missed ${whenLabel(i.dueAt)}</span>`;
       side=`<div class="card-side wide"><button class="btn tiny ghost" onclick="dismissInstance('${i.id}')">Dismiss</button></div>`;
     }
-    return `<div class="card">
+    return `<div class="card ${isMine&&scope==='all'?'mine':''}">
       ${lead||`<div class="avatar ${u&&u.blocked?'off':''}">${initial}</div>`}
       <div class="card-body">
         <div class="card-title">${esc(t.title)}</div>
-        <div class="meta"><span class="chip who">${u?esc(u.displayName):'Unassigned'}</span>${chip}</div>
+        <div class="meta"><span class="chip who">${isMine?'You':(u?esc(u.displayName):'Unassigned')}</span>${chip}</div>
         ${t.note?`<div class="card-note">${esc(t.note)}</div>`:''}
       </div>
       ${side}
@@ -1173,7 +1180,7 @@ function renderTasks(){
       <div class="card-body">
         <div class="card-title">${esc(t.title)}</div>
         <div class="meta">
-          <span class="chip who">${u?esc(u.displayName):'Unassigned'}</span>
+          <span class="chip who">${t.assigneeId===ME?'You':(u?esc(u.displayName):'Unassigned')}</span>
           <span class="chip">${repLabel(t)}</span>
           <span class="chip time">${esc(t.time)}</span>
           <span class="chip peri">${t.graceMins>=60?(t.graceMins/60)+'h':t.graceMins+'m'} grace</span>
@@ -1299,7 +1306,7 @@ function renderUsers(){
         <div class="un">${esc(u.displayName)}</div>
         <div class="uid">@${esc(u.userId)}</div>
         <div class="meta" style="margin-top:6px">
-          ${u.pin==='0000'?'<span class="chip amber">Default PIN</span>':'<span class="chip">PIN set</span>'}
+          <span class="chip time">PIN ${esc(u.pin)}</span>
           ${u.blocked?'<span class="chip rose">Blocked</span>':''}
           ${u.id===ME?'<span class="chip who">You</span>':''}
         </div>
@@ -1315,7 +1322,7 @@ function openUser(id){
   editUser=id||null;
   const u=id?user(id):null;
   document.getElementById('user-h').textContent=u?'Edit user':'Add user';
-  document.getElementById('user-sub').textContent=u?'Every user needs a 4-digit PIN.':'Name, ID and a 4-digit PIN.';
+  document.getElementById('user-sub').textContent=u?'Every user needs a unique 4-digit PIN.':'Name, ID and a unique 4-digit PIN.';
   document.getElementById('u-save').textContent=u?'Save changes':'Add user';
   document.getElementById('u-name').value=u?u.displayName:'';
   document.getElementById('u-id').value=u?u.userId:'';
@@ -1332,7 +1339,9 @@ function saveUser(){
   if(!/^[a-z0-9._-]{3,}$/.test(id)){ err.textContent='User ID needs 3+ characters — letters, numbers, dot, dash or underscore.'; return; }
   if(DB.users.some(u=>u.userId===id&&u.id!==editUser)){ err.textContent='That user ID is taken. Pick another.'; return; }
   if(!/^\d{4}$/.test(pin)){ err.textContent='PIN must be exactly 4 digits.'; return; }
-  if(DB.users.some(u=>u.pin===pin&&u.id!==editUser)){ err.textContent='Another user already has that PIN. Pick a different one.'; return; }
+  const clash=DB.users.find(u=>u.pin===pin&&u.id!==editUser);
+  if(clash){ err.textContent=`${clash.displayName} already uses that PIN. Every user needs a different one.`; return; }
+  if(pin===DB.settings.adminPin){ err.textContent='That is the admin PIN. Pick a different one.'; return; }
   if(editUser){ Object.assign(user(editUser),{displayName:name,userId:id,pin}); toast('User updated'); }
   else{ DB.users.push({id:uid(),displayName:name,userId:id,pin,blocked:false}); toast(name+' added'); }
   close_('user'); save(); renderUsers(); render(); renderLock(); paintMe();
@@ -1368,7 +1377,7 @@ function seed(){
   DB.users=[a,th];
   const t1={id:uid(),title:'Did you finish your homework?',assigneeId:th.id,creatorId:a.id,repeat:'daily',time:'19:00',graceMins:60,note:'Maths and the reading log.'};
   const t2={id:uid(),title:'Take the evening medicine',assigneeId:th.id,creatorId:a.id,repeat:'daily',time:'21:30',graceMins:30,note:''};
-  const t3={id:uid(),title:'Water the balcony plants',assigneeId:th.id,creatorId:a.id,repeat:'weekly',weekday:6,time:'10:00',graceMins:240,note:'The tulsi first.'};
+  const t3={id:uid(),title:'Water the balcony plants',assigneeId:a.id,creatorId:th.id,repeat:'weekly',weekday:6,time:'10:00',graceMins:240,note:'The tulsi first.'};
   DB.tasks=[t1,t2,t3];
   const now=Date.now();
   DB.instances=[
@@ -1383,20 +1392,19 @@ function seed(){
 (async()=>{
   DEVICE=await LS.get('favour-device');
   if(!DEVICE){ DEVICE=uid()+uid(); await LS.set('favour-device',DEVICE); }
-
   try{ const c=await LS.get('favour-cfg'); if(c) CFG={...CFG,...JSON.parse(c)}; }catch(e){}
   try{ const d=await LS.get('favour-db'); if(d) DB=JSON.parse(d); }catch(e){}
   if(!DB.users||!DB.users.length) seed();
   normalise();
   applyTheme(DB.settings.theme);
 
-  buildPad(document.getElementById('lock-keys'),document.getElementById('lock-dots'),lockDigit);
-  buildPad(document.getElementById('gate-keys'),document.getElementById('gate-dots'),gateDigit);
+  buildPad(document.getElementById('lock-keys'),lockDigit);
+  buildPad(document.getElementById('gate-keys'),gateDigit);
   renderLock();
   setSyncDot(CFG.on?'busy':'off');
 
   const sess=await LS.get('favour-session');
-  if(sess&&user(sess)&&!user(sess).blocked){ await signIn(sess); }
+  if(sess&&user(sess)&&!user(sess).blocked) await signIn(sess);
 
   if(CFG.on){ startSyncLoop(); pull(); }
   setInterval(()=>{ if(ME&&!document.hidden) render(); },30000);
