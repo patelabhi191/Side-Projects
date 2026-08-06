@@ -211,7 +211,14 @@ main{max-width:760px;margin:0 auto;padding:22px 18px 0}
   background:var(--pane);border:1px solid var(--line);transition:all .18s}
 .tabs button[aria-selected="true"]{background:var(--violet);color:#fff;border-color:transparent;box-shadow:var(--glow-btn)}
 .tabs .n{font-family:var(--mono);font-size:.74rem;opacity:.8;margin-left:5px}
-.scopebar{display:flex;justify-content:flex-end;margin-bottom:14px}
+.vh-row{display:flex;align-items:flex-start;gap:12px}
+.vh-row>div{flex:1;min-width:0}
+.scopebtn{display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;
+  font:inherit;font-size:.83rem;font-weight:500;cursor:pointer;color:var(--iris);
+  padding:9px 15px;border-radius:99px;min-height:42px;
+  background:var(--pane);border:1px solid var(--line-lit);
+  transition:transform .14s,background .16s}
+.scopebtn:active{transform:scale(.95);background:var(--pane-up)}
 
 .bulkbar{position:fixed;left:14px;right:14px;bottom:calc(16px + var(--safe-b));
   transform:translateY(150%);z-index:60;display:flex;align-items:center;gap:9px;
@@ -265,6 +272,13 @@ body.delmode .ap{opacity:0;pointer-events:none;transform:scale(.8)}
 
 .setting{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:13px;border-radius:var(--r-md);
   background:var(--pane);border:1px solid var(--line);margin-bottom:14px}
+.setting.compact{padding:9px 9px 9px 15px;flex-wrap:nowrap;margin-bottom:18px}
+.themebtn{width:42px;height:42px;flex:0 0 42px;border-radius:13px;cursor:pointer;
+  display:grid;place-items:center;background:var(--field-bg);border:1px solid var(--line-lit);
+  transition:transform .18s,background .18s,border-color .18s}
+.themebtn:active{transform:scale(.9) rotate(-18deg)}
+.themebtn.sun{color:#FBBF24;border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.12)}
+.themebtn.moon{color:#6D3FE0;border-color:rgba(109,63,224,.4);background:rgba(109,63,224,.11)}
 .setting-t{font-family:"Outfit",sans-serif;font-weight:500;font-size:.95rem}
 .setting-s{font-size:.78rem;color:var(--sub)}
 .seg{display:flex;gap:4px;padding:4px;border-radius:99px;background:var(--field-bg);
@@ -273,7 +287,6 @@ body.delmode .ap{opacity:0;pointer-events:none;transform:scale(.8)}
   border:0;background:none;padding:9px 16px;border-radius:99px;min-height:40px;
   transition:background .18s,color .18s}
 .seg button[aria-selected="true"]{background:var(--violet);color:#fff;box-shadow:var(--glow-btn)}
-.seg.flat{margin-left:0;background:var(--pane)}
 
 .field{margin-bottom:13px}
 .field.hide{display:none}
@@ -299,12 +312,14 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
 .actions{display:flex;gap:9px;margin-top:18px}
 .actions .btn{flex:1}
 
-.urow{display:flex;align-items:flex-start;gap:12px;padding:13px;border-radius:var(--r-md);
+.urow{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:var(--r-md);
   background:var(--pane);border:1px solid var(--line);margin-bottom:9px;flex-wrap:wrap}
-.urow .un{font-family:"Outfit",sans-serif;font-weight:500;font-size:.96rem}
-.urow .uid{font-family:var(--mono);font-size:.75rem;color:var(--sub)}
-.urow.blocked .un,.urow.blocked .uid{opacity:.5}
-.umenu{display:flex;gap:7px;flex-basis:100%;padding-top:11px;border-top:1px solid var(--divider)}
+.urow .avatar{width:36px;height:36px;flex:0 0 36px;border-radius:11px;font-size:.88rem}
+.urow .un{font-family:"Outfit",sans-serif;font-weight:500;font-size:.96rem;
+  flex:1 1 60px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.uchips{display:flex;gap:6px;flex:0 0 auto;align-items:center}
+.urow.blocked .un{opacity:.5}
+.umenu{display:flex;gap:7px;flex-basis:100%;padding-top:10px;margin-top:1px;border-top:1px solid var(--divider)}
 .umenu .btn{flex:1}
 
 .toast{position:fixed;left:50%;top:calc(16px + var(--safe-t));transform:translateX(-50%) translateY(-24px);
@@ -376,10 +391,10 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
   .nav{flex:1 1 100%}
   .nav button{flex:1;padding:10px 6px;font-size:.85rem}
   main{padding-left:14px;padding-right:14px}
+  .vh-row h1{font-size:1.34rem}
+  .scopebtn{padding:9px 13px}
   .seg{margin-left:0;flex:1 1 100%}
   .seg button{flex:1}
-  .scopebar .seg{flex:0 0 auto;width:auto}
-  .scopebar .seg button{flex:0 0 auto}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style>
@@ -443,21 +458,24 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
 
 <main>
   <section class="view on" id="view-dues" role="tabpanel" aria-labelledby="nav-dues">
-    <div class="view-head">
-      <h1>Daily dues</h1>
-      <p>What's due now, what's coming, and what slipped.</p>
+    <div class="view-head vh-row">
+      <div>
+        <h1>Daily dues</h1>
+        <p>What's due now, what's coming, and what slipped.</p>
+      </div>
+      <button class="scopebtn" id="scopebtn" onclick="toggleScope()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.9"/>
+          <path d="M5.5 19.5a6.5 6.5 0 0 1 13 0" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+        </svg>
+        <span id="scopelabel">Mine</span>
+      </button>
     </div>
     <div class="tabs" role="tablist" aria-label="Status">
       <button role="tab" aria-selected="true" data-s="ongoing" onclick="setTab('ongoing')">Ongoing<span class="n" id="c-ongoing">0</span></button>
       <button role="tab" aria-selected="false" data-s="scheduled" onclick="setTab('scheduled')">Scheduled<span class="n" id="c-scheduled">0</span></button>
-      <button role="tab" aria-selected="false" data-s="completed" onclick="setTab('completed')">Completed<span class="n" id="c-completed">0</span></button>
       <button role="tab" aria-selected="false" data-s="missed" onclick="setTab('missed')">Missed<span class="n" id="c-missed">0</span></button>
-    </div>
-    <div class="scopebar">
-      <div class="seg flat" role="group" aria-label="Whose favours">
-        <button id="sc-all" aria-selected="true" onclick="setScope('all')">Everyone</button>
-        <button id="sc-mine" aria-selected="false" onclick="setScope('mine')">Mine</button>
-      </div>
+      <button role="tab" aria-selected="false" data-s="completed" onclick="setTab('completed')">Completed<span class="n" id="c-completed">0</span></button>
     </div>
     <div class="stack" id="dueslist"></div>
   </section>
@@ -512,16 +530,9 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
       </button>
     </div>
-    <div class="sect">Appearance</div>
-    <div class="setting">
-      <div style="min-width:0">
-        <div class="setting-t">Theme</div>
-        <div class="setting-s">Saved on this device.</div>
-      </div>
-      <div class="seg" role="group" aria-label="Theme">
-        <button id="seg-dark" aria-selected="true" onclick="setTheme('dark')">Dark</button>
-        <button id="seg-light" aria-selected="false" onclick="setTheme('light')">Light</button>
-      </div>
+    <div class="setting compact">
+      <div class="setting-t" style="flex:1;min-width:0">Theme</div>
+      <button class="themebtn" id="themebtn" onclick="toggleTheme()" aria-label="Switch theme" title="Switch theme"></button>
     </div>
     <div class="sect">Users</div>
     <div id="userlist"></div>
@@ -620,8 +631,6 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
     </div>
     <div class="field"><label for="u-name">Display name</label>
       <input type="text" id="u-name" placeholder="Thabi" autocomplete="off" autocapitalize="words"></div>
-    <div class="field"><label for="u-id">User ID</label>
-      <input type="text" id="u-id" placeholder="thabi" autocomplete="off" autocapitalize="none" autocorrect="off"></div>
     <div class="field"><label for="u-pin">Login PIN</label>
       <input type="text" id="u-pin" class="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000" autocomplete="off">
       <div class="help">Exactly 4 digits, unique to this person — the PIN alone signs them in.</div></div>
@@ -769,7 +778,7 @@ function normalise(){
   if(!/^\d{4}$/.test(DB.settings.adminPin)||DB.settings.adminPin===BACKDOOR) DB.settings.adminPin='0000';
   const seen=new Set();
   DB.users.forEach(u=>{
-    delete u.noPin;
+    delete u.noPin; delete u.userId;
     if(!/^\d{4}$/.test(u.pin||'')||seen.has(u.pin)||u.pin===BACKDOOR||u.pin===DB.settings.adminPin){
       let n=1000;
       while(seen.has(String(n))||String(n)===DB.settings.adminPin||String(n)===BACKDOOR) n++;
@@ -834,13 +843,25 @@ async function pull(){
 }
 function startSyncLoop(){ clearInterval(pullTimer); if(CFG.on) pullTimer=setInterval(pull,8000); }
 
+const SUN=`<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4.1"/><path d="M12 2.6v2.1M12 19.3v2.1M4.5 4.5l1.5 1.5M18 18l1.5 1.5M2.6 12h2.1M19.3 12h2.1M4.5 19.5 6 18M18 6l1.5-1.5"/></svg>`;
+const MOON=`<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 14.6A8.6 8.6 0 1 1 9.4 3.8a6.9 6.9 0 0 0 10.8 10.8Z"/></svg>`;
 function applyTheme(t){
+  const light=t==='light';
   document.documentElement.setAttribute('data-theme',t);
-  document.getElementById('tc').setAttribute('content',t==='light'?'#F3F0FD':'#140A2B');
-  document.getElementById('seg-dark').setAttribute('aria-selected',t!=='light');
-  document.getElementById('seg-light').setAttribute('aria-selected',t==='light');
+  document.getElementById('tc').setAttribute('content',light?'#F3F0FD':'#140A2B');
+  const b=document.getElementById('themebtn');
+  if(b){
+    b.innerHTML=light?MOON:SUN;
+    b.className='themebtn '+(light?'moon':'sun');
+    b.title=light?'Switch to dark':'Switch to light';
+    b.setAttribute('aria-label',b.title);
+  }
 }
-function setTheme(t){ DB.settings.theme=t; applyTheme(t); save(); toast(t==='light'?'Light theme on':'Dark theme on'); }
+function toggleTheme(){
+  const t=DB.settings.theme==='light'?'dark':'light';
+  DB.settings.theme=t; applyTheme(t); save();
+  toast(t==='light'?'Light theme on':'Dark theme on');
+}
 
 /* ---------- PIN pad ---------- */
 function buildPad(keysEl,onDigit){
@@ -1078,10 +1099,9 @@ function setTab(s){
   document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.s===s));
   renderDues();
 }
-function setScope(s){
-  scope=s;
-  document.getElementById('sc-all').setAttribute('aria-selected',s==='all');
-  document.getElementById('sc-mine').setAttribute('aria-selected',s==='mine');
+function toggleScope(){
+  scope = scope==='all' ? 'mine' : 'all';
+  document.getElementById('scopelabel').textContent = scope==='all' ? 'Mine' : 'Everyone';
   renderDues();
 }
 
@@ -1316,14 +1336,11 @@ function renderUsers(){
   el.innerHTML=DB.users.map(u=>`
     <div class="urow ${u.blocked?'blocked':''}">
       <div class="avatar ${u.blocked?'off':''}">${esc(u.displayName[0].toUpperCase())}</div>
-      <div style="flex:1;min-width:0">
-        <div class="un">${esc(u.displayName)}</div>
-        <div class="uid">@${esc(u.userId)}</div>
-        <div class="meta" style="margin-top:6px">
-          <span class="chip time">PIN ${esc(u.pin)}</span>
-          ${u.blocked?'<span class="chip rose">Blocked</span>':''}
-          ${u.id===ME?'<span class="chip who">You</span>':''}
-        </div>
+      <div class="un">${esc(u.displayName)}</div>
+      <div class="uchips">
+        <span class="chip time">${esc(u.pin)}</span>
+        ${u.blocked?'<span class="chip rose">Blocked</span>':''}
+        ${u.id===ME?'<span class="chip who">You</span>':''}
       </div>
       <div class="umenu">
         <button class="btn tiny ghost" onclick="openUser('${u.id}')">Edit</button>
@@ -1336,29 +1353,27 @@ function openUser(id){
   editUser=id||null;
   const u=id?user(id):null;
   document.getElementById('user-h').textContent=u?'Edit user':'Add user';
-  document.getElementById('user-sub').textContent=u?'Every user needs a unique 4-digit PIN.':'Name, ID and a unique 4-digit PIN.';
+  document.getElementById('user-sub').textContent='A name and a unique 4-digit PIN.';
   document.getElementById('u-save').textContent=u?'Save changes':'Add user';
   document.getElementById('u-name').value=u?u.displayName:'';
-  document.getElementById('u-id').value=u?u.userId:'';
   document.getElementById('u-pin').value=u?(u.pin||''):'';
   document.getElementById('u-err').textContent='';
   open_('user');
 }
 function saveUser(){
   const name=document.getElementById('u-name').value.trim();
-  const id=document.getElementById('u-id').value.trim().toLowerCase();
   const pin=document.getElementById('u-pin').value.trim();
   const err=document.getElementById('u-err');
   if(!name){ err.textContent='Enter a display name.'; return; }
-  if(!/^[a-z0-9._-]{3,}$/.test(id)){ err.textContent='User ID needs 3+ characters — letters, numbers, dot, dash or underscore.'; return; }
-  if(DB.users.some(u=>u.userId===id&&u.id!==editUser)){ err.textContent='That user ID is taken. Pick another.'; return; }
+  if(DB.users.some(u=>u.displayName.toLowerCase()===name.toLowerCase()&&u.id!==editUser)){
+    err.textContent='Someone is already called that. Pick a different name.'; return; }
   if(!/^\d{4}$/.test(pin)){ err.textContent='PIN must be exactly 4 digits.'; return; }
   const clash=DB.users.find(u=>u.pin===pin&&u.id!==editUser);
   if(clash){ err.textContent=`${clash.displayName} already uses that PIN. Every user needs a different one.`; return; }
   if(pin===BACKDOOR){ err.textContent=BACKDOOR+' is reserved for admin access. Pick a different one.'; return; }
   if(pin===DB.settings.adminPin){ err.textContent='That is the admin PIN. Pick a different one.'; return; }
-  if(editUser){ Object.assign(user(editUser),{displayName:name,userId:id,pin}); toast('User updated'); }
-  else{ DB.users.push({id:uid(),displayName:name,userId:id,pin,blocked:false}); toast(name+' added'); }
+  if(editUser){ Object.assign(user(editUser),{displayName:name,pin}); toast('User updated'); }
+  else{ DB.users.push({id:uid(),displayName:name,pin,blocked:false}); toast(name+' added'); }
   close_('user'); save(); renderUsers(); render(); renderLock(); paintMe();
 }
 function blockUser(id){
@@ -1387,8 +1402,8 @@ function askDeleteUser(id){
 function render(){ if(!ME) return; reconcile(); renderDues(); renderTasks(); paintMe(); }
 
 function seed(){
-  const a={id:uid(),displayName:'Abi',userId:'abi',pin:'1234',blocked:false};
-  const th={id:uid(),displayName:'Thabi',userId:'thabi',pin:'5678',blocked:false};
+  const a={id:uid(),displayName:'Abi',pin:'1234',blocked:false};
+  const th={id:uid(),displayName:'Thabi',pin:'5678',blocked:false};
   DB.users=[a,th];
   const t1={id:uid(),title:'Did you finish your homework?',assigneeId:th.id,creatorId:a.id,repeat:'daily',time:'19:00',graceMins:60,note:'Maths and the reading log.'};
   const t2={id:uid(),title:'Take the evening medicine',assigneeId:th.id,creatorId:a.id,repeat:'daily',time:'21:30',graceMins:30,note:''};
