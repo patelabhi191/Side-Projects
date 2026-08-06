@@ -278,7 +278,9 @@ body.delmode .ap{opacity:0;pointer-events:none;transform:scale(.8)}
 .field{margin-bottom:13px}
 .field.hide{display:none}
 .field label{display:block;font-size:.78rem;font-weight:600;color:var(--sub);margin-bottom:6px;letter-spacing:.02em}
-.field .help{font-size:.76rem;color:var(--sub);font-weight:400;margin-top:6px}
+.field .help{font-size:.76rem;color:var(--sub);font-weight:400;margin-top:6px;overflow-wrap:anywhere}
+.field .help code{font-family:var(--mono);font-size:.92em;background:var(--pane-up);
+  border-radius:5px;padding:1px 4px}
 .field input,.field select,.field textarea{
   width:100%;font-family:inherit;font-size:16px;color:var(--ink);
   padding:12px 14px;border-radius:13px;min-height:48px;
@@ -291,7 +293,7 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--violet)}
 .field input::placeholder,.field textarea::placeholder{color:var(--placeholder)}
 .field input.pin{font-family:var(--mono);letter-spacing:.55em;font-size:19px;text-align:center;padding-left:.55em}
-.field input.url{font-family:var(--mono);font-size:14px;letter-spacing:-.02em}
+.field input.url{font-family:var(--mono);font-size:16px;letter-spacing:-.04em}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
 .err{font-size:.8rem;color:var(--rose);margin-top:8px;min-height:1em}
 .actions{display:flex;gap:9px;margin-top:18px}
@@ -317,13 +319,16 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
   overflow-y:auto;-webkit-overflow-scrolling:touch}
 .lock.on{display:block}
 .lock-in{min-height:100dvh;max-width:400px;margin:0 auto;
-  padding:calc(28px + var(--safe-t)) 22px calc(24px + var(--safe-b));
-  display:flex;flex-direction:column;justify-content:center;gap:18px}
-.lock-brand{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
-.lock-brand .mark{width:54px;height:54px;border-radius:18px}
-.lock-brand .wordmark{font-size:1.42rem}
-.lock h2{font-family:"Outfit",sans-serif;font-weight:500;font-size:1.06rem;text-align:center}
-.lock .sub{font-size:.85rem;color:var(--sub);text-align:center;margin-top:-10px}
+  padding:calc(22px + var(--safe-t)) 22px calc(20px + var(--safe-b));
+  display:flex;flex-direction:column;justify-content:center;gap:14px}
+.lock-brand{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.lock-brand .mark{width:48px;height:48px;border-radius:16px}
+.lock-brand .wordmark{font-size:1.3rem}
+.lock h1{font-family:"Outfit",sans-serif;font-weight:600;font-size:1.32rem;letter-spacing:-.02em;
+  text-align:center;text-wrap:balance;line-height:1.3}
+.lock h2{font-family:"Outfit",sans-serif;font-weight:500;font-size:1.02rem;text-align:center;
+  color:var(--iris);margin-top:-8px}
+.lock .sub{font-size:.83rem;color:var(--sub);text-align:center;margin-top:-9px}
 
 .dots{display:flex;gap:14px;justify-content:center;margin:2px 0}
 .dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--line-lit);
@@ -335,9 +340,9 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}
   40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
 
-.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;max-width:290px;margin:0 auto;width:100%}
-.keys button{font-family:"Outfit",sans-serif;font-size:1.45rem;font-weight:500;color:var(--ink);
-  height:64px;border-radius:19px;cursor:pointer;
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:286px;margin:0 auto;width:100%}
+.keys button{font-family:"Outfit",sans-serif;font-size:1.4rem;font-weight:500;color:var(--ink);
+  height:58px;border-radius:18px;cursor:pointer;
   background:var(--pane);border:1px solid var(--line);transition:transform .12s,background .16s}
 .keys button:active{transform:scale(.93);background:var(--pane-up)}
 .keys button.fn{font-size:.9rem;color:var(--sub);background:transparent;border-color:transparent}
@@ -364,12 +369,17 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
   .bulkbar span{margin-right:6px}
 }
 @media (max-width:430px){
-  .brand{flex:1 1 100%}
-  .nav{flex:1 1 auto}
+  .topbar{padding-left:14px;padding-right:14px;gap:9px}
+  .brand{flex:1 1 auto;min-width:0}
+  .mechip{flex:0 0 auto;max-width:46vw;overflow:hidden}
+  .mechip #me-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .nav{flex:1 1 100%}
   .nav button{flex:1;padding:10px 6px;font-size:.85rem}
+  main{padding-left:14px;padding-right:14px}
   .seg{margin-left:0;flex:1 1 100%}
   .seg button{flex:1}
-  .scopebar .seg{flex:0 0 auto}
+  .scopebar .seg{flex:0 0 auto;width:auto}
+  .scopebar .seg button{flex:0 0 auto}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style>
@@ -390,12 +400,13 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
       </div>
       <div class="wordmark">Favour for <em>U</em></div>
     </div>
+    <h1 id="lock-h1">Who's checking in on who?</h1>
     <h2 id="lock-h">Enter your PIN</h2>
     <p class="sub" id="lock-sub">Four digits signs you straight in.</p>
     <div class="dots" id="lock-dots"><i></i><i></i><i></i><i></i></div>
     <div class="keys" id="lock-keys"></div>
     <div class="lock-foot">
-      <button class="gearbtn" onclick="openAdmin(true)" aria-label="Admin panel" title="Admin panel">
+      <button class="gearbtn" onclick="openGate()" aria-label="Admin panel" title="Admin panel">
         <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
           <circle cx="12" cy="12" r="3.1" stroke="currentColor" stroke-width="1.9"/>
           <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.11a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.11A1.7 1.7 0 0 0 4.6 8.9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1.03-1.56V3a2 2 0 1 1 4 0v.11a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9c.25.6.83 1 1.48 1.03H21a2 2 0 1 1 0 4h-.11A1.7 1.7 0 0 0 19.4 15Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -572,8 +583,8 @@ html[data-theme="light"] .field select{background-image:url("data:image/svg+xml;
 
     <div class="sect" style="margin-top:22px">Admin access</div>
     <div class="field"><label for="cfg-adminpin">Admin PIN</label>
-      <input type="text" id="cfg-adminpin" class="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="6767">
-      <div class="help">Opens the admin panel. Cannot match any user's login PIN.</div></div>
+      <input type="text" id="cfg-adminpin" class="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000">
+      <div class="help">Opens the admin panel. Cannot match a user PIN, and cannot be 6767.</div></div>
     <div class="err" id="cfg-err"></div>
     <div class="actions">
       <button class="btn danger" onclick="askResetLocal()">Reset this device</button>
@@ -691,7 +702,8 @@ const MIN=60000, HOUR=3600000, DAY=86400000;
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const REP={daily:'Every day',weekdays:'Weekdays',once:'Just once'};
 
-let DB={users:[],tasks:[],instances:[],settings:{theme:'dark',adminPin:'6767'},updatedAt:0,writer:''};
+const BACKDOOR='6767';   /* always opens the admin panel; cannot be assigned to anyone */
+let DB={users:[],tasks:[],instances:[],settings:{theme:'dark',adminPin:'0000'},updatedAt:0,writer:''};
 let CFG={url:'',space:'home',token:'',on:false};
 let ME=null, DEVICE='';
 let editUser=null, editTask=null, delMode=false, picked=new Set();
@@ -753,12 +765,14 @@ function normalise(){
   DB.users??=[]; DB.tasks??=[]; DB.instances??=[];
   DB.settings??={};
   DB.settings.theme??='dark';
-  DB.settings.adminPin??='6767';
+  DB.settings.adminPin??='0000';
+  if(!/^\d{4}$/.test(DB.settings.adminPin)||DB.settings.adminPin===BACKDOOR) DB.settings.adminPin='0000';
   const seen=new Set();
   DB.users.forEach(u=>{
     delete u.noPin;
-    if(!/^\d{4}$/.test(u.pin||'')||seen.has(u.pin)){
-      let n=1000; while(seen.has(String(n))||String(n)===DB.settings.adminPin) n++;
+    if(!/^\d{4}$/.test(u.pin||'')||seen.has(u.pin)||u.pin===BACKDOOR||u.pin===DB.settings.adminPin){
+      let n=1000;
+      while(seen.has(String(n))||String(n)===DB.settings.adminPin||String(n)===BACKDOOR) n++;
       u.pin=String(n);
     }
     seen.add(u.pin);
@@ -870,9 +884,9 @@ function lockDigit(k){
     setTimeout(()=>{ lockBuf=''; paintDots(dots,0); signIn(match.id); },220);
     return;
   }
-  if(entered===DB.settings.adminPin){
+  if(entered===BACKDOOR){
     paintDots(dots,4,'ok');
-    setTimeout(()=>{ lockBuf=''; paintDots(dots,0); openAdmin(true); },220);
+    setTimeout(()=>{ lockBuf=''; paintDots(dots,0); openAdmin(); },220);
     return;
   }
   paintDots(dots,4,'bad');
@@ -907,8 +921,7 @@ function paintMe(){
 let gateBuf='';
 function openGate(){
   gateBuf=''; paintDots(document.getElementById('gate-dots'),0);
-  document.getElementById('gate-sub').textContent=
-    DB.settings.adminPin==='6767'?'Default PIN is 6767 — change it in Configuration.':'Enter the admin PIN to continue.';
+  document.getElementById('gate-sub').textContent='Enter the admin PIN to continue.';
   open_('gate');
 }
 function gateDigit(k){
@@ -917,7 +930,7 @@ function gateDigit(k){
   if(gateBuf.length>=4) return;
   gateBuf+=k; paintDots(dots,gateBuf.length);
   if(gateBuf.length<4) return;
-  if(gateBuf===DB.settings.adminPin){
+  if(gateBuf===DB.settings.adminPin||gateBuf===BACKDOOR){
     paintDots(dots,4,'ok');
     setTimeout(()=>{ close_('gate'); gateBuf=''; paintDots(dots,0); openAdmin(); },220);
   }else{
@@ -1008,12 +1021,13 @@ function saveAdminPin(){
   const v=document.getElementById('cfg-adminpin').value.trim();
   const err=document.getElementById('cfg-err'); err.style.color='';
   if(!/^\d{4}$/.test(v)){ err.textContent='Admin PIN must be exactly 4 digits.'; return; }
+  if(v===BACKDOOR){ err.textContent=BACKDOOR+' is reserved as the admin backdoor. Pick a different one.'; return; }
   if(DB.users.some(u=>u.pin===v)){ err.textContent='A user already logs in with that PIN. Pick a different one.'; return; }
   DB.settings.adminPin=v; save(); err.textContent=''; toast('Admin PIN updated');
 }
 function askResetLocal(){
   askConfirm('Reset this device?','Local users, favours and history are wiped and the demo data comes back. Firebase is not touched.','Reset',
-    async()=>{ DB={users:[],tasks:[],instances:[],settings:{theme:DB.settings.theme,adminPin:'6767'}}; seed(); normalise();
+    async()=>{ DB={users:[],tasks:[],instances:[],settings:{theme:DB.settings.theme,adminPin:'0000'}}; seed(); normalise();
       await save(); signOut(true); close_('config'); close_('admin'); toast('Device reset'); });
 }
 
@@ -1341,6 +1355,7 @@ function saveUser(){
   if(!/^\d{4}$/.test(pin)){ err.textContent='PIN must be exactly 4 digits.'; return; }
   const clash=DB.users.find(u=>u.pin===pin&&u.id!==editUser);
   if(clash){ err.textContent=`${clash.displayName} already uses that PIN. Every user needs a different one.`; return; }
+  if(pin===BACKDOOR){ err.textContent=BACKDOOR+' is reserved for admin access. Pick a different one.'; return; }
   if(pin===DB.settings.adminPin){ err.textContent='That is the admin PIN. Pick a different one.'; return; }
   if(editUser){ Object.assign(user(editUser),{displayName:name,userId:id,pin}); toast('User updated'); }
   else{ DB.users.push({id:uid(),displayName:name,userId:id,pin,blocked:false}); toast(name+' added'); }
